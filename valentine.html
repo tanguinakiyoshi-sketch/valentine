@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Be My Valentine? 💖</title>
+    <style>
+        body {
+            margin: 0;
+            overflow-x: hidden;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #ffccd5, #ffe6f0);
+            padding: 50px 20px;
+        }
+
+        h1 {
+            margin-top: 20px;
+            font-size: 36px;
+            color: #ff4d6d;
+        }
+
+        button {
+            font-size: 22px;
+            padding: 15px 30px;
+            margin: 20px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: gray; color: white; position: absolute; }
+
+        #resultImage, #sadImage {
+            display: none;
+            max-width: 300px;
+            border-radius: 15px;
+            margin: 20px auto;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        #message {
+            display: none;
+            margin: 20px auto;
+            max-width: 600px;
+            font-size: 18px;
+            color: #ff3366;
+            text-align: left;
+            white-space: pre-line;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: -50px;
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+            color: #ff4d6d;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<h1>Will You Be My Valentine? 💖</h1>
+
+<img id="resultImage" src="https://i.imgur.com/YVeEw8F.png" alt="Our Picture">
+<img id="sadImage" src="https://i.imgur.com/YVeEw8F.png" alt="Sad Image">
+
+<div id="message"></div>
+
+<br>
+<button id="yesBtn">Yes 💘</button>
+<button id="noBtn">No 😢</button>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const resultImage = document.getElementById("resultImage");
+const sadImage = document.getElementById("sadImage");
+const messageDiv = document.getElementById("message");
+
+// NO button initial position
+noBtn.style.top = "50%";
+noBtn.style.left = "55%";
+
+// Function to move NO button
+function moveNoButton() {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 100);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// Hover for PC
+noBtn.addEventListener("mouseover", moveNoButton);
+
+// Touch for iOS / mobile
+noBtn.addEventListener("touchstart", moveNoButton);
+
+// If NO clicked
+noBtn.addEventListener("click", function() {
+    sadImage.style.display = "block";
+    setTimeout(() => { sadImage.style.opacity = 1; }, 50);
+});
+
+// Long message
+const longMessage = `I just wanted to say thank you for coming into my life. I’m really grateful to have youu. You’ve made me so happy this week I can't believe na after for so long magiging masaya ako ng ganito, and I didn’t even realize how much I needed that until you were here.Even if we’re far from each other, you still manage to make my days better. Kahit simpleng messages mo lang, they mean so much to me. I honestly wish na tumagal pa tayo, and I hope this is just the beginning of something more.
+
+I’m really looking forward to the day na magkita tayo in person. I know it might take time, but I think it’ll be worth the wait. I’ll keep choosing you, even from a distance:))`;
+
+// Typewriter effect
+function typeWriter(text, i = 0) {
+    if (i < text.length) {
+        messageDiv.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(() => typeWriter(text, i), 25);
+    }
+}
+
+// If YES clicked
+yesBtn.addEventListener("click", function() {
+    resultImage.style.display = "block";
+    setTimeout(() => { resultImage.style.opacity = 1; }, 50);
+
+    messageDiv.style.display = "block";
+    setTimeout(() => { typeWriter(longMessage); }, 500);
+
+    sadImage.style.display = "none";
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+    document.querySelector("h1").innerText = "YAYYY! 💖 See you on Valentine’s!";
+});
+
+// Floating hearts
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 20 + "px";
+    heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => { heart.remove(); }, 6000);
+}
+setInterval(createHeart, 500);
+
+</script>
+
+</body>
+</html>
